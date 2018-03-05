@@ -1,9 +1,5 @@
 \documentclass{article}
 
-\usepackage{a4wide}
-\usepackage{algpseudocode}
-\usepackage{algorithm}
-\usepackage{float}
 \usepackage{datetime2}
 
 \title{Algorithms to be used in the Talos implementations}
@@ -45,6 +41,6 @@
 		\item Using the following order: literal node, variable node, set node, universal node. That is, from most specific to least specific.
 		\item The order of specification in the permission rules.
 	\end{enumerate}
-	If the path is empty, or if there are no more child nodes, check if the permission of the node, or of any of its ancestors has been set. If so, return the permission of the ancestor node closest to the node under consideration. If not, go one level up and check the next matched node there.\\
+	If every part of the path has been used, or if there are no more child nodes, check if the permission of the node, or of any of its ancestors has been set. If so, return the permission of the ancestor node closest to the node under consideration. If not, go one level up and check the next matched node there.\\
 	If no permission is found in the entire tree, permission is denied for the specified.
 \end{document}
