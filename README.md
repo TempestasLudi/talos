@@ -37,7 +37,7 @@ A > B
 allow A x/*
 deny  B x/y
 ```
-Although `A` has access to `x` and `x/y`, `B` does not have access to `x/y` as inherited access is overridden.
+Although `A` has access to `x/y`, `B` does not have access to `x/y` as inherited access is overridden.
 
 ### Variables
 ```
