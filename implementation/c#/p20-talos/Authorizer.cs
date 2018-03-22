@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using p20_talos.tree;
 
@@ -38,21 +36,32 @@ namespace p20_talos
         {
             
             var regex = new Regex("[ ]{2,}", RegexOptions.None);
-            data.Split('\n').Select(r => regex.Replace(r, " ").Split(new[] {' '}, 3).Select(p => p.Trim()).ToArray())
+            data.Split('\n')
+                .Select(r => r.Trim())
+                .Where(r => r.Length > 0 && r[0] != '#')
+                .Select(r => regex.Replace(r, " ").Split(' ').Select(p => p.Trim()).ToArray())
                 .ToList().ForEach(r =>
                 {
-                    if (r.Length < 3)
+                    if (r.Length != 3)
                     {
-                        return;
+                        throw new ParseException("Malformed rule '" + string.Join(" ", r) + "': a rule should have three parts.");
                     }
 
-                    if (r[1] == ">")
+                    var isInheritance = r[1] == ">";
+                    var isPermission = (r[0] == "allow" || r[0] == "deny");
+                    if (!isInheritance && !isPermission)
+                    {
+                        throw new ParseException("Malformed rule: a rule should either be a permission rule or a inheritance rule.");
+                    }
+
+                    if (isInheritance && isPermission)
+                    {
+                        throw new ParseException("Ambiguous rule: a rule cannot be both a permission rule and an inheritance rule.");
+                    }
+
+                    if (isInheritance)
                     {
                         _inheritance[r[2]] = r[0];
-                    }
-
-                    if (r[0] != "allow" && r[0] != "deny")
-                    {
                         return;
                     }
 
@@ -61,10 +70,7 @@ namespace p20_talos
                         _permissions[r[1]] = new RootNode();
                     }
 
-                    if (r[2][0] == '/')
-                    {
-                        r[2] = r[2].Substring(1);
-                    }
+                    r[2] = r[2].Substring(r[2][0] == '/' ? 1 : 0);
 
                     _permissions[r[1]].AddRule(r[0] == "allow", r[2]);
                 });

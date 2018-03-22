@@ -15,7 +15,7 @@ namespace p20_talos.tree
         {
             if (!variables.ContainsKey(_name))
             {
-                throw new AuthorizationException("No variable named " + _name + " exists!");
+                throw new AuthorizationException("No variable named " + _name + " exists.");
             }
             return variables[_name] == word;
         }

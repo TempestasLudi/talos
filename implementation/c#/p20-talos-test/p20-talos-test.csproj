@@ -53,7 +53,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="test-files\*.talos">
+    <Content Include="test-files\*\*.talos">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace p20_talos.tree
         {
             if (!sets.ContainsKey(_name))
             {
-                throw new AuthorizationException("No set named " + _name + " exists!");
+                throw new AuthorizationException("No set named " + _name + " exists.");
             }
             return sets[_name].Contains(word);
         }

@@ -17,13 +17,23 @@ namespace p20_talos_test
             var sets = new Dictionary<string, HashSet<string>>();
             Assert.IsFalse(authorizer.HasAccess("Junior", "/hello", variables, sets));
         }
+
+        [Test]
+        public void TestComment()
+        {
+            var authorizer = new Authorizer();
+            authorizer.LoadPermissionsFile("test-files/normal/comment.talos");
+            var variables = new Dictionary<string, string>();
+            var sets = new Dictionary<string, HashSet<string>>();
+            Assert.IsFalse(authorizer.HasAccess("Junior", "/hello", variables, sets));
+        }
         
         [Test]
         public void TestCommon1()
         {
             var authorizer = new Authorizer();
             Console.WriteLine(Directory.GetCurrentDirectory());
-            authorizer.LoadPermissionsFile("test-files/common.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/common.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -38,7 +48,7 @@ namespace p20_talos_test
         public void TestInheritance1()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/inheritance1.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/inheritance1.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -54,7 +64,7 @@ namespace p20_talos_test
         public void TestInheritance2()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/inheritance2.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/inheritance2.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -71,7 +81,7 @@ namespace p20_talos_test
         public void TestVariables()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/variables.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/variables.talos");
 
             var variables = new Dictionary<string, string> {{"sesid", "15"}};
             var sets = new Dictionary<string, HashSet<string>>();
@@ -87,7 +97,7 @@ namespace p20_talos_test
         public void TestSets()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/sets.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/sets.talos");
 
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>
@@ -112,7 +122,7 @@ namespace p20_talos_test
         public void TestPermissionConflict()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/permission-conflict.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/permission-conflict.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -123,7 +133,7 @@ namespace p20_talos_test
         public void TestMissingVariable()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/missing-variable.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/missing-variable.talos");
             Assert.Catch<AuthorizationException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
         }
 
@@ -131,8 +141,36 @@ namespace p20_talos_test
         public void TestMissingSet()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissionsFile("test-files/missing-set.talos");
+            authorizer.LoadPermissionsFile("test-files/normal/missing-set.talos");
             Assert.Catch<AuthorizationException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
+        }
+
+        [Test]
+        public void TestMalformedInheritance1()
+        {
+            var authorizer = new Authorizer();
+            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/inheritance1.talos"));
+        }
+
+        [Test]
+        public void TestMalformedInheritance2()
+        {
+            var authorizer = new Authorizer();
+            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/inheritance1.talos"));
+        }
+
+        [Test]
+        public void TestAmbiguousRule()
+        {
+            var authorizer = new Authorizer();
+            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/ambiguous.talos"));
+        }
+
+        [Test]
+        public void TestMalformedPermission()
+        {
+            var authorizer = new Authorizer();
+            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/permission.talos"));
         }
     }
 }
