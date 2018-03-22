@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using p20_talos;
 
@@ -8,14 +10,20 @@ namespace p20_talos_test
     public class AuthorizerTest
     {
         [Test]
-        public void Test1()
+        public void TestEmpty()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissions(
-                @"
-allow Admin   /
-deny  Admin   /home/*/personalsecrets"
-            );
+            var variables = new Dictionary<string, string>();
+            var sets = new Dictionary<string, HashSet<string>>();
+            Assert.IsFalse(authorizer.HasAccess("Junior", "/hello", variables, sets));
+        }
+        
+        [Test]
+        public void TestCommon1()
+        {
+            var authorizer = new Authorizer();
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            authorizer.LoadPermissionsFile("test-files/common.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -27,17 +35,26 @@ deny  Admin   /home/*/personalsecrets"
         }
 
         [Test]
-        public void Test2()
+        public void TestInheritance1()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissions(
-                @"A > B
-B > C
+            authorizer.LoadPermissionsFile("test-files/inheritance1.talos");
+            var variables = new Dictionary<string, string>();
+            var sets = new Dictionary<string, HashSet<string>>();
 
-allow A x
-deny  A x/*
-allow B x/y
-allow C x/z");
+            Assert.IsTrue(authorizer.HasAccess("A", "x", variables, sets));
+            Assert.IsTrue(authorizer.HasAccess("A", "x/y", variables, sets));
+            Assert.IsTrue(authorizer.HasAccess("A", "x/z/g/", variables, sets));
+            Assert.IsTrue(authorizer.HasAccess("B", "x", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("B", "x/y", variables, sets));
+            Assert.IsTrue(authorizer.HasAccess("B", "x/z/g/", variables, sets));
+        }
+        
+        [Test]
+        public void TestInheritance2()
+        {
+            var authorizer = new Authorizer();
+            authorizer.LoadPermissionsFile("test-files/inheritance2.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -51,32 +68,10 @@ allow C x/z");
         }
 
         [Test]
-        public void Test3()
+        public void TestVariables()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissions(
-                @"A > B
-
-allow A x
-deny  B x/y");
-            var variables = new Dictionary<string, string>();
-            var sets = new Dictionary<string, HashSet<string>>();
-
-            Assert.IsTrue(authorizer.HasAccess("A", "x", variables, sets));
-            Assert.IsTrue(authorizer.HasAccess("A", "x/y", variables, sets));
-            Assert.IsTrue(authorizer.HasAccess("A", "x/z/g/", variables, sets));
-            Assert.IsTrue(authorizer.HasAccess("B", "x", variables, sets));
-            Assert.IsFalse(authorizer.HasAccess("B", "x/y", variables, sets));
-            Assert.IsTrue(authorizer.HasAccess("B", "x/z/g/", variables, sets));
-        }
-
-        [Test]
-        public void Test4()
-        {
-            var authorizer = new Authorizer();
-            authorizer.LoadPermissions(
-                @"deny User session
-allow User session/[sesid]");
+            authorizer.LoadPermissionsFile("test-files/variables.talos");
 
             var variables = new Dictionary<string, string> {{"sesid", "15"}};
             var sets = new Dictionary<string, HashSet<string>>();
@@ -89,18 +84,10 @@ allow User session/[sesid]");
         }
 
         [Test]
-        public void Test5()
+        public void TestSets()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissions(
-                @"User > Admin
-
-deny  User  devices/*
-allow User  devices/{ownedDevices}
-allow User  devices/{public}/control
-allow User  devices/{allowedDevices}/control
-
-allow Admin devices");
+            authorizer.LoadPermissionsFile("test-files/sets.talos");
 
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>
@@ -122,13 +109,10 @@ allow Admin devices");
         }
 
         [Test]
-        public void Test6()
+        public void TestPermissionConflict()
         {
             var authorizer = new Authorizer();
-            authorizer.LoadPermissions(
-                @"allow A x/*/z
-deny  A x/y/*"
-            );
+            authorizer.LoadPermissionsFile("test-files/permission-conflict.talos");
             var variables = new Dictionary<string, string>();
             var sets = new Dictionary<string, HashSet<string>>();
 
@@ -136,12 +120,19 @@ deny  A x/y/*"
         }
 
         [Test]
-        public void TestEmpty()
+        public void TestMissingVariable()
         {
             var authorizer = new Authorizer();
-            var variables = new Dictionary<string, string>();
-            var sets = new Dictionary<string, HashSet<string>>();
-            Assert.IsFalse(authorizer.HasAccess("Junior", "/hello", variables, sets));
+            authorizer.LoadPermissionsFile("test-files/missing-variable.talos");
+            Assert.Catch<AuthorizationException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
+        }
+
+        [Test]
+        public void TestMissingSet()
+        {
+            var authorizer = new Authorizer();
+            authorizer.LoadPermissionsFile("test-files/missing-set.talos");
+            Assert.Catch<AuthorizationException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
         }
     }
 }

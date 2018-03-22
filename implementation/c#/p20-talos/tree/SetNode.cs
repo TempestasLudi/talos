@@ -13,6 +13,10 @@ namespace p20_talos.tree
 
         protected override bool Matches(string word, Dictionary<string, string> variables, Dictionary<string, HashSet<string>> sets)
         {
+            if (!sets.ContainsKey(_name))
+            {
+                throw new AuthorizationException("No set named " + _name + " exists!");
+            }
             return sets[_name].Contains(word);
         }
 

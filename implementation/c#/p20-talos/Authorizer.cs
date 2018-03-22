@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using p20_talos.tree;
 
@@ -34,6 +36,7 @@ namespace p20_talos
 
         public void LoadPermissions(string data)
         {
+            
             var regex = new Regex("[ ]{2,}", RegexOptions.None);
             data.Split('\n').Select(r => regex.Replace(r, " ").Split(new[] {' '}, 3).Select(p => p.Trim()).ToArray())
                 .ToList().ForEach(r =>

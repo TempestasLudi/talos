@@ -44,12 +44,21 @@
   <ItemGroup>
     <Compile Include="AuthorizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetupClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\p20-talos\p20-talos.csproj">
       <Project>{b224be77-d3e3-4e41-b2b7-6652d5c5e610}</Project>
       <Name>p20-talos</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test-files\*.talos">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="files" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

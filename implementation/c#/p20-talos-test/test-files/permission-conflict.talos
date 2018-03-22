@@ -1,0 +1,2 @@
+allow A x/*/z
+deny  A x/y/*

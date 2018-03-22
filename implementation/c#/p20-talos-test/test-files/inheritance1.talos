@@ -1,0 +1,4 @@
+A > B
+
+allow A x
+deny  B x/y
