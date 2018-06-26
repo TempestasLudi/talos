@@ -34,12 +34,11 @@ namespace p20_talos
 
         public void LoadPermissions(string data)
         {
-            
-            var regex = new Regex("[ ]{2,}", RegexOptions.None);
+            var doubleSpacesRegex = new Regex("[ ]{2,}", RegexOptions.None);
             data.Split('\n')
                 .Select(r => r.Trim())
                 .Where(r => r.Length > 0 && r[0] != '#')
-                .Select(r => regex.Replace(r, " ").Split(' ').Select(p => p.Trim()).ToArray())
+                .Select(r => doubleSpacesRegex.Replace(r, " ").Split(' ').Select(p => p.Trim()).ToArray())
                 .ToList().ForEach(r =>
                 {
                     if (r.Length != 3)
