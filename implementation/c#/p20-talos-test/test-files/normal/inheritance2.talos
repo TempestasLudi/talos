@@ -1,0 +1,7 @@
+A > B
+B > C
+
+allow A x
+deny  A x/*
+allow B x/y
+allow C x/z

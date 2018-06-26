@@ -1,0 +1,2 @@
+allow Admin   /
+deny  Admin   /home/*/personalsecrets
