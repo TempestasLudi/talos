@@ -14,7 +14,7 @@ The core of the system is determining who has access to what. To that end, suppo
 
 This function calculates whether the specified role has access to the resource indicated by \texttt{path}, given the specified variables and sets. It returns a boolean. The types of the arguments are:
 
-| *Name*      | *Type*                                                                     |
+| Name        | Type                                                                       |
 | ----------- | -------------------------------------------------------------------------- |
 | `role`      | string                                                                     |
 | `path`      | string                                                                     |
@@ -44,7 +44,7 @@ Usually when systems grow, more and more data is moved to a database. The permis
 
 This function loads the permission and inheritance rules from two tables, via `connection`, specified in `names`. The argument `type` is optional to implement. If necessary, it can carry the database type. The function does not return a value. The types of the arguments are:
 
-| *Name*       | *Type*              |
+| Name         | Type                |
 | ------------ | ------------------- |
 | `connection` | database connection |
 | `type`       | enumerated type     |

@@ -13,7 +13,7 @@ When adding rule, traverse or create the tree, repeatedly taking the node corres
 ## Nodes of the permission tree
 A node of the permission tree can be of different types, each having its own appearance in a permission rule:
 
-| *Name*         | *Notation*   | *Meaning*                                    |
+| Name           | Notation     | Meaning                                      |
 | -------------- | :----------: | -------------------------------------------- |
 | Literal node   | `name`       | Matches exactly the specified name.          |
 | Variable node  | `[variable]` | Matches the value of the specified variable. |
