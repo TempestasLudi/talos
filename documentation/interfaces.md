@@ -9,10 +9,10 @@ The function and variable names in the text below probably have to be altered sl
 The core of the system is determining who has access to what. To that end, suppose the permission rules have already been loaded. Then, the following function should be available:
 
 ```
-\texttt{hasAccess(role, path, variables, sets)}
+hasAccess(role, path, variables, sets)
 ```
 
-This function calculates whether the specified role has access to the resource indicated by \texttt{path}, given the specified variables and sets. It returns a boolean. The types of the arguments are:
+This function calculates whether the specified role has access to the resource indicated by `path`, given the specified variables and sets. It returns a boolean. The types of the arguments are:
 
 | Name        | Type                                                                       |
 | ----------- | -------------------------------------------------------------------------- |
@@ -20,18 +20,24 @@ This function calculates whether the specified role has access to the resource i
 | `path`      | string                                                                     |
 | `variables` | set of key-value pairs, with both keys and values being strings            |
 | `sets`      | set of key-value pairs, the keys being strings, the values sets of strings |
+
+If a variable or set is not specified, even though the function needs to check it, the function throws a missing value exception.
 	
 ## IO
 ### Basic functionality
-The system should at least support the following three methods:
+The system should at least support the following three functions:
 
 1. ```loadPermissions(permissions)```
 
 	This function loads the permission and inheritance rules specified in `permissions`. It can, if deemed useful by the implementer, construct the permission tree for every role, although this can also be done when checking access for a specific role. The function does not return a value. `permissions` is a string.
 
+	If the permissions are malformed or ambiguous, this function throws a malformed rule exception.
+
 2. ```loadPermissionsFile(filename)```
 
 	This function opens the file `filename` and loads the permission and inheritance rules specified therein. It can, if deemed useful by the implementer, construct the permission tree for every role, although this can also be done when checking access for a specific role. The function does not return a value. `filename` is a string, or another useful description of a file.
+
+	If the permissions are malformed or ambiguous, this function throws a malformed rule exception.
 
 3. ```clearPermissions()```
 
