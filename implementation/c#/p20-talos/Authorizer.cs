@@ -60,7 +60,7 @@ namespace p20_talos
         {
             if (rule.Length != 3)
             {
-                throw new ParseException("Malformed rule '" + string.Join(" ", r) + "': a rule should have three parts.");
+                throw new ParseException("Malformed rule '" + string.Join(" ", rule) + "': a rule should have three parts.");
             }
         }
 
