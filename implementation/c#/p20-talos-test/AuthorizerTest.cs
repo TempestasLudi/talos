@@ -43,6 +43,41 @@ namespace p20_talos_test
             Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5/personalsecrets", variables, sets));
             Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5/personalsecrets/things", variables, sets));
         }
+        
+        [Test]
+        public void TestClear1()
+        {
+            var authorizer = new Authorizer();
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            authorizer.LoadPermissionsFile("test-files/normal/common.talos");
+            authorizer.ClearPermissions();
+            var variables = new Dictionary<string, string>();
+            var sets = new Dictionary<string, HashSet<string>>();
+
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/tmp/srv/thing", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5/personalsecrets", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5/personalsecrets/things", variables, sets));
+        }
+        
+        [Test]
+        public void TestClear2()
+        {
+            var authorizer = new Authorizer();
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            authorizer.LoadPermissionsFile("test-files/normal/inheritance1.talos");
+            authorizer.ClearPermissions();
+            authorizer.LoadPermissionsFile("test-files/normal/common.talos");
+            var variables = new Dictionary<string, string>();
+            var sets = new Dictionary<string, HashSet<string>>();
+
+            Assert.IsTrue(authorizer.HasAccess("Admin", "/", variables, sets));
+            Assert.IsTrue(authorizer.HasAccess("Admin", "/home/5", variables, sets));
+            Assert.IsTrue(authorizer.HasAccess("Admin", "/tmp/srv/thing", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5/personalsecrets", variables, sets));
+            Assert.IsFalse(authorizer.HasAccess("Admin", "/home/5/personalsecrets/things", variables, sets));
+        }
 
         [Test]
         public void TestInheritance1()
