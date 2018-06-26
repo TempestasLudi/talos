@@ -1,0 +1,8 @@
+User > Admin
+
+deny  User  devices/*
+allow User  devices/{ownedDevices}
+allow User  devices/{public}/control
+allow User  devices/{allowedDevices}/control
+
+allow Admin devices

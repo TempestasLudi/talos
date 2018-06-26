@@ -1,0 +1,2 @@
+deny User session
+allow User session/[sesid]

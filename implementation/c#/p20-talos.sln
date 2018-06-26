@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "p20-talos", "p20-talos\p20-talos.csproj", "{B224BE77-D3E3-4E41-B2B7-6652D5C5E610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "p20-talos-test", "p20-talos-test\p20-talos-test.csproj", "{FBEBE13A-E3EF-49BE-9C98-0C6401943C3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B224BE77-D3E3-4E41-B2B7-6652D5C5E610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B224BE77-D3E3-4E41-B2B7-6652D5C5E610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B224BE77-D3E3-4E41-B2B7-6652D5C5E610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B224BE77-D3E3-4E41-B2B7-6652D5C5E610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEBE13A-E3EF-49BE-9C98-0C6401943C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEBE13A-E3EF-49BE-9C98-0C6401943C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEBE13A-E3EF-49BE-9C98-0C6401943C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEBE13A-E3EF-49BE-9C98-0C6401943C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
