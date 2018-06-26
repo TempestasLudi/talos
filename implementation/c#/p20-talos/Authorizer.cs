@@ -41,38 +41,69 @@ namespace p20_talos
                 .Select(r => doubleSpacesRegex.Replace(r, " ").Split(' ').Select(p => p.Trim()).ToArray())
                 .ToList().ForEach(r =>
                 {
-                    if (r.Length != 3)
+                    CheckRuleSyntaxis(r);
+                    
+                    var ruleType = GetRuleType(r);
+
+                    if (ruleType == RuleType.Inheritance)
                     {
-                        throw new ParseException("Malformed rule '" + string.Join(" ", r) + "': a rule should have three parts.");
+                        SetInheritance(r);
                     }
-
-                    var isInheritance = r[1] == ">";
-                    var isPermission = (r[0] == "allow" || r[0] == "deny");
-                    if (!isInheritance && !isPermission)
+                    else
                     {
-                        throw new ParseException("Malformed rule: a rule should either be a permission rule or a inheritance rule.");
+                        SetPermission(r);
                     }
-
-                    if (isInheritance && isPermission)
-                    {
-                        throw new ParseException("Ambiguous rule: a rule cannot be both a permission rule and an inheritance rule.");
-                    }
-
-                    if (isInheritance)
-                    {
-                        _inheritance[r[2]] = r[0];
-                        return;
-                    }
-
-                    if (!_permissions.ContainsKey(r[1]))
-                    {
-                        _permissions[r[1]] = new RootNode();
-                    }
-
-                    r[2] = r[2].Substring(r[2][0] == '/' ? 1 : 0);
-
-                    _permissions[r[1]].AddRule(r[0] == "allow", r[2]);
                 });
+        }
+
+        private static void CheckRuleSyntaxis(string[] rule)
+        {
+            if (rule.Length != 3)
+            {
+                throw new ParseException("Malformed rule '" + string.Join(" ", r) + "': a rule should have three parts.");
+            }
+        }
+
+        private static RuleType GetRuleType(IReadOnlyList<string> rule)
+        {
+            var isInheritance = rule[1] == ">";
+            var isPermission = (rule[0] == "allow" || rule[0] == "deny");
+
+            if (isInheritance)
+            {
+                if (isPermission)
+                {
+                    throw new ParseException(
+                        "Ambiguous rule: a rule cannot be both a permission rule and an inheritance rule.");
+                }
+
+                return RuleType.Inheritance;
+            }
+
+            if (isPermission)
+            {
+                return RuleType.Permission;
+            }
+
+            throw new ParseException(
+                "Malformed rule: a rule should either be a permission rule or a inheritance rule.");
+        }
+
+        private void SetInheritance(IReadOnlyList<string> rule)
+        {
+            _inheritance[rule[2]] = rule[0];
+        }
+
+        private void SetPermission(IReadOnlyList<string> rule)
+        {
+            if (!_permissions.ContainsKey(rule[1]))
+            {
+                _permissions[rule[1]] = new RootNode();
+            }
+
+            var path = rule[2].Substring(rule[2][0] == '/' ? 1 : 0);
+
+            _permissions[rule[1]].AddRule(rule[0] == "allow", path);
         }
 
         public void LoadPermissionsFile(string filename)
@@ -84,6 +115,11 @@ namespace p20_talos
         {
             _inheritance.Clear();
             _permissions.Clear();
+        }
+
+        private enum RuleType
+        {
+            Inheritance, Permission
         }
     }
 }
