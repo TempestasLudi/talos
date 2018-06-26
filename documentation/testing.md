@@ -17,11 +17,11 @@ Verify that, if no permissions have been specified, the user "Junior" has no acc
 
 ### Comment
 
-Verify that if the permissions file "normal/comment.talos" has been loaded, the user "Junior" has no access to the path "/hello".
+Verify that if the permissions file `normal/comment.talos` has been loaded, the user "Junior" has no access to the path "/hello".
 
 ### Common
 
-Load the permissions file "normal/common.talos". Verify:
+Load the permissions file `normal/common.talos`. Verify:
 
 | User  | Path                           | Has access |
 | ----- | ------------------------------ | ---------- |
@@ -33,7 +33,7 @@ Load the permissions file "normal/common.talos". Verify:
 
 ### Clear 1
 
-Load the permissions file "normal/common.talos". Invoke the `clearPermissions` function. Verify:
+Load the permissions file `normal/common.talos`. Invoke the `clearPermissions` function. Verify:
 
 | User  | Path                           | Has access |
 | ----- | ------------------------------ | ---------- |
@@ -45,7 +45,7 @@ Load the permissions file "normal/common.talos". Invoke the `clearPermissions` f
 
 ### Clear 2
 
-Load the permissions file "normal/inheritance1.talos". Invoke the `clearPermissions` function. Load the permissions file "normal/common.talos". Verify:
+Load the permissions file `normal/inheritance1.talos`. Invoke the `clearPermissions` function. Load the permissions file `normal/common.talos`. Verify:
 
 | User  | Path                           | Has access |
 | ----- | ------------------------------ | ---------- |
@@ -57,7 +57,7 @@ Load the permissions file "normal/inheritance1.talos". Invoke the `clearPermissi
 
 ### Inheritance 1
 
-Load the permissions file "normal/inheritance1.talos". Verify:
+Load the permissions file `normal/inheritance1.talos`. Verify:
 
 | User  | Path  | Has access |
 | ----- | ----- | ---------- |
@@ -70,7 +70,7 @@ Load the permissions file "normal/inheritance1.talos". Verify:
 
 ### Inheritance 2
 
-Load the permissions file "normal/inheritance2.talos". Verify:
+Load the permissions file `normal/inheritance2.talos`. Verify:
 
 | User  | Path | Has access |
 | ----- | -----| ---------- |
@@ -84,7 +84,7 @@ Load the permissions file "normal/inheritance2.talos". Verify:
 
 ### Variables
 
-Load the permissions file "normal/variables.talos".
+Load the permissions file `normal/variables.talos`.
 
 Use the following variables:
 
@@ -138,7 +138,7 @@ Verify:
 
 ### Permission conflict
 
-Load the permissions file "normal/permission-conflict.talos".
+Load the permissions file `normal/permission-conflict.talos`.
 
 | User | Path  | Has access |
 | ---- | ----- | ---------- |
@@ -146,24 +146,24 @@ Load the permissions file "normal/permission-conflict.talos".
 
 ### Missing variable
 
-Load the permissions file "normal/missing-set.talos". Verify that checking whether the user "A" has access to "/a", without any variables, gives an authorization exception.
+Load the permissions file `normal/missing-set.talos`. Verify that checking whether the user "A" has access to "/a", without any variables, gives an authorization exception.
 
 ### Missing set
 
-Load the permissions file "normal/missing-set.talos". Verify that checking whether the user "A" has access to "/a", without any sets, gives an authorization exception.
+Load the permissions file `normal/missing-set.talos`. Verify that checking whether the user "A" has access to "/a", without any sets, gives an authorization exception.
 
 ### Malformed inheritance 1
 
-Try to load the permissions file "malformed/inheritance1.talos" and verify that that gives a parse exception.
+Try to load the permissions file `malformed/inheritance1.talos` and verify that that gives a parse exception.
 
 ### Malformed inheritance 2
 
-Try to load the permissions file "malformed/inheritance2.talos" and verify that that gives a parse exception.
+Try to load the permissions file `malformed/inheritance2.talos` and verify that that gives a parse exception.
 
 ### Ambiguous rule
 
-Try to load the permissions file "malformed/ambiguous.talos" and verify that that gives a parse exception.
+Try to load the permissions file `malformed/ambiguous.talos` and verify that that gives a parse exception.
 
 ### Malformed permission
 
-Try to load the permissions file "malformed/permission.talos" and verify that that gives a parse exception.
+Try to load the permissions file `malformed/permission.talos` and verify that that gives a parse exception.
