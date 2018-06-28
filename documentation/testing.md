@@ -146,24 +146,24 @@ Load the permissions file `normal/permission-conflict.talos`.
 
 ### Missing variable
 
-Load the permissions file `normal/missing-set.talos`. Verify that checking whether the user "A" has access to "/a", without any variables, gives an authorization exception.
+Load the permissions file `normal/missing-set.talos`. Verify that checking whether the user "A" has access to "/a", without any variables, gives an missing value exception.
 
 ### Missing set
 
-Load the permissions file `normal/missing-set.talos`. Verify that checking whether the user "A" has access to "/a", without any sets, gives an authorization exception.
+Load the permissions file `normal/missing-set.talos`. Verify that checking whether the user "A" has access to "/a", without any sets, gives an missing value exception.
 
 ### Malformed inheritance 1
 
-Try to load the permissions file `malformed/inheritance1.talos` and verify that that gives a parse exception.
+Try to load the permissions file `malformed/inheritance1.talos` and verify that that gives a malformed rule exception.
 
 ### Malformed inheritance 2
 
-Try to load the permissions file `malformed/inheritance2.talos` and verify that that gives a parse exception.
+Try to load the permissions file `malformed/inheritance2.talos` and verify that that gives a malformed rule exception.
 
 ### Ambiguous rule
 
-Try to load the permissions file `malformed/ambiguous.talos` and verify that that gives a parse exception.
+Try to load the permissions file `malformed/ambiguous.talos` and verify that that gives a malformed rule exception.
 
 ### Malformed permission
 
-Try to load the permissions file `malformed/permission.talos` and verify that that gives a parse exception.
+Try to load the permissions file `malformed/permission.talos` and verify that that gives a malformed rule exception.
