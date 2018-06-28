@@ -96,9 +96,9 @@ Verify:
 
 | User | Path         | Has access |
 | ---- | ------------ | ---------- |
-| User | session      | Yes        |
+| User | session      | No         |
 | User | session/5517 | No         |
-| User | session/15   | No         |
+| User | session/15   | Yes        |
 
 Use the following variables:
 
@@ -110,7 +110,7 @@ Verify:
 
 | User | Path       | Has access |
 | ---- | ---------- | ---------- |
-| User | session/20 | No         |
+| User | session/20 | Yes        |
 
 ### Sets
 

@@ -1,0 +1,39 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Open Sans", SansSerif;
+	background-color: #333;
+	color: #ccc;
+	margin: 0;
+}
+
+main {
+	max-width: 800px;
+	width: 100%;
+	margin: auto;
+	background-color: #0004;
+	padding: 20px 50px 20%;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+tr:not(:last-child) {
+	padding-bottom: 2px;
+}
+
+td:not(:last-child), th:not(:last-child) {
+	padding-right: 5px;
+}
+
+td.succeeded-test {
+	color: #0f0;
+}
+
+td.failed-test {
+	color: #f00;
+}
