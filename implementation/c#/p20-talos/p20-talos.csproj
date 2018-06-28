@@ -38,9 +38,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationException.cs" />
+    <Compile Include="MissingValueException.cs" />
     <Compile Include="Authorizer.cs" />
-    <Compile Include="ParseException.cs" />
+    <Compile Include="MalformedRuleException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tree\LiteralNode.cs" />
     <Compile Include="tree\Node.cs" />
