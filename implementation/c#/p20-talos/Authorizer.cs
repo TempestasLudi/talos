@@ -60,7 +60,7 @@ namespace p20_talos
         {
             if (rule.Length != 3)
             {
-                throw new ParseException("Malformed rule '" + string.Join(" ", rule) + "': a rule should have three parts.");
+                throw new MalformedRuleException("Malformed rule '" + string.Join(" ", rule) + "': a rule should have three parts.");
             }
         }
 
@@ -73,7 +73,7 @@ namespace p20_talos
             {
                 if (isPermission)
                 {
-                    throw new ParseException(
+                    throw new MalformedRuleException(
                         "Ambiguous rule: a rule cannot be both a permission rule and an inheritance rule.");
                 }
 
@@ -85,7 +85,7 @@ namespace p20_talos
                 return RuleType.Permission;
             }
 
-            throw new ParseException(
+            throw new MalformedRuleException(
                 "Malformed rule: a rule should either be a permission rule or a inheritance rule.");
         }
 

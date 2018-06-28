@@ -169,7 +169,7 @@ namespace p20_talos_test
         {
             var authorizer = new Authorizer();
             authorizer.LoadPermissionsFile("test-files/normal/missing-variable.talos");
-            Assert.Catch<AuthorizationException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
+            Assert.Catch<MissingValueException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
         }
 
         [Test]
@@ -177,35 +177,35 @@ namespace p20_talos_test
         {
             var authorizer = new Authorizer();
             authorizer.LoadPermissionsFile("test-files/normal/missing-set.talos");
-            Assert.Catch<AuthorizationException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
+            Assert.Catch<MissingValueException>(() => authorizer.HasAccess("A", "/a", new Dictionary<string, string>(), new Dictionary<string, HashSet<string>>()));
         }
 
         [Test]
         public void TestMalformedInheritance1()
         {
             var authorizer = new Authorizer();
-            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/inheritance1.talos"));
+            Assert.Catch<MalformedRuleException>(() => authorizer.LoadPermissionsFile("test-files/malformed/inheritance1.talos"));
         }
 
         [Test]
         public void TestMalformedInheritance2()
         {
             var authorizer = new Authorizer();
-            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/inheritance1.talos"));
+            Assert.Catch<MalformedRuleException>(() => authorizer.LoadPermissionsFile("test-files/malformed/inheritance1.talos"));
         }
 
         [Test]
         public void TestAmbiguousRule()
         {
             var authorizer = new Authorizer();
-            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/ambiguous.talos"));
+            Assert.Catch<MalformedRuleException>(() => authorizer.LoadPermissionsFile("test-files/malformed/ambiguous.talos"));
         }
 
         [Test]
         public void TestMalformedPermission()
         {
             var authorizer = new Authorizer();
-            Assert.Catch<ParseException>(() => authorizer.LoadPermissionsFile("test-files/malformed/permission.talos"));
+            Assert.Catch<MalformedRuleException>(() => authorizer.LoadPermissionsFile("test-files/malformed/permission.talos"));
         }
     }
 }
